@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,15 +16,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.demo.Adapters.PeritsAdapter;
 import com.example.demo.Classes.Especialitat;
-import com.example.demo.Classes.FabIconAnimator;
 import com.example.demo.Classes.Perit;
 import com.example.demo.R;
-import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
 
     private Dialog dialog;
     private ArrayList<Perit> perits;
+    private RecyclerView recyclerViewPerits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,29 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
         setContentView(R.layout.activity_especialitats_perits);
 
         dialog = new Dialog(this);
+        recyclerViewPerits = (RecyclerView) findViewById(R.id.recyclerViewPerits);
+        recyclerViewPerits.setNestedScrollingEnabled(false);
+
         perits = getPerits();
+
+
+        NestedScrollView scrollViewActivity = (NestedScrollView) findViewById(R.id.scrollViewActEspecialitats);
+
+        ExtendedFloatingActionButton extendedFloatingActionButton = (ExtendedFloatingActionButton) findViewById(R.id.extendedFloatingActionButton);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            scrollViewActivity.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    if (oldScrollY > scrollY) {
+                        extendedFloatingActionButton.extend();
+                    } else if (oldScrollY < scrollY) {
+                        extendedFloatingActionButton.shrink();
+                    }
+                }
+            });
+        }
+
         mostrarLlistaPerits(perits);
 
         Spinner spinnerEspecialitzacio = (Spinner) findViewById(R.id.spinnerEspecialitzacio);
@@ -49,8 +73,7 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
         spinnerEspecialitzacio.setAdapter(adapter);
 
         filtrarPerits();
-        FabIconAnimator fabIconAnimator = new FabIconAnimator(findViewById(R.id.constraintLayoutActivityEspecialtats));
-        fabIconAnimator.setExtended(true);
+
         buscarPerits();
     }
 
@@ -121,9 +144,9 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
     }
 
     public void filtrarPerits() {
-        MaterialButton floatingActionButtonFiltres = (MaterialButton) findViewById(R.id.fab);
+        ExtendedFloatingActionButton extendedFloatingActionButton = (ExtendedFloatingActionButton) findViewById(R.id.extendedFloatingActionButton);
 
-        floatingActionButtonFiltres.setOnClickListener(new View.OnClickListener() {
+        extendedFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String[] listItems = new String[getEspecialitats().size()];
