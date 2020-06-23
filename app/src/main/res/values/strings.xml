@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="dialog_title">Filtra per especialitats</string>
+    <string name="ok_label">Ok</string>
+    <string name="dismiss_label">Cancel</string>
+    <string name="clear_all_label">Clear All</string>
+</resources>

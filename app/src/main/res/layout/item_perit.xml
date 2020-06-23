@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    android:fitsSystemWindows="true"
+
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        >
+
+
+        <ImageView
+            android:id="@+id/imageViewPerit"
+            android:layout_width="94dp"
+            android:layout_height="96dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textViewNomPerit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPerit"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPerit" />
+
+        <ImageView
+            android:id="@+id/imageViewTelf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp"
+            android:alpha="1"
+            android:padding="3dp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPerit"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewUbicacio"
+            app:srcCompat="@drawable/ic_round_phone_24" />
+
+        <TextView
+            android:id="@+id/textViewTelefon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/imageViewTelf"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUbicacio" />
+
+        <ImageView
+            android:id="@+id/imageViewUbicacio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="6dp"
+            android:contentDescription="TODO"
+            android:padding="3dp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPerit"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNomPerit"
+            app:srcCompat="@drawable/ic_round_pin_drop_24" />
+
+        <TextView
+            android:id="@+id/textViewUbicacio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/imageViewUbicacio"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNomPerit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
