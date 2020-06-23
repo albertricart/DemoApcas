@@ -49,4 +49,25 @@ public class Perit {
     public boolean isExercent() {
         return exercent;
     }
+
+    public boolean buscarCamp(CharSequence charSequence) {
+        boolean trobat = false;
+        if (nom.toLowerCase().contains(charSequence.toString().toLowerCase())) {
+            trobat = true;
+        } else {
+            if (String.valueOf(telefon).contains(charSequence.toString().toLowerCase())) {
+                trobat = true;
+            } else {
+                if (provincia.toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                    trobat = true;
+                } else {
+                    if (email.toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                        trobat = true;
+                    }
+                }
+            }
+        }
+
+        return trobat;
+    }
 }

@@ -1,38 +1,37 @@
 package com.example.demo.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.AutoTransition;
-import androidx.transition.TransitionManager;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.demo.Adapters.PeritsAdapter;
 import com.example.demo.Classes.Especialitat;
 import com.example.demo.Classes.FabIconAnimator;
 import com.example.demo.Classes.Perit;
-import com.example.demo.Classes.TransientBarBehavior;
 import com.example.demo.R;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
 public class EspecialitatsPeritsActivity extends AppCompatActivity implements PeritsAdapter.OnPeritListener {
 
     private Dialog dialog;
+    private ArrayList<Perit> perits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,8 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
         setContentView(R.layout.activity_especialitats_perits);
 
         dialog = new Dialog(this);
-        mostrarLlistaPerits(getPerits());
+        perits = getPerits();
+        mostrarLlistaPerits(perits);
 
         Spinner spinnerEspecialitzacio = (Spinner) findViewById(R.id.spinnerEspecialitzacio);
 
@@ -51,7 +51,7 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
         filtrarPerits();
         FabIconAnimator fabIconAnimator = new FabIconAnimator(findViewById(R.id.constraintLayoutActivityEspecialtats));
         fabIconAnimator.setExtended(true);
-        
+        buscarPerits();
     }
 
 
@@ -92,6 +92,32 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         //li passem el adapter a la recycler view
         recyclerView.setAdapter(peritsAdapter);
+    }
+
+    public void buscarPerits() {
+        TextInputEditText editText = findViewById(R.id.editTextBuscar);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayList<Perit> peritsFiltrats = new ArrayList<>();
+                for (Perit perit : perits) {
+                    if (perit.buscarCamp(s)) {
+                        peritsFiltrats.add(perit);
+                    }
+                }
+
+                mostrarLlistaPerits(peritsFiltrats);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
     }
 
     public void filtrarPerits() {
