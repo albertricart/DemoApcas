@@ -16,13 +16,15 @@
         android:id="@+id/extendedFloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_gravity="bottom|right"
         android:text="Filtrar"
+        app:backgroundTint="@color/colorAccent"
         app:elevation="10dp"
         app:icon="@drawable/ic_round_filter_list_24"
+        app:rippleColor="@color/colorPrimaryDark"
         tools:text="Filtrar" />
 
 

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:fillViewport="true"
     tools:context=".Activities.MainActivity">
 
@@ -11,23 +12,28 @@
         android:id="@+id/mainConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:background="#25D50000">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardBenvinguda"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
+            android:layout_marginBottom="8dp"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="8dp"
             app:cardElevation="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/cardEspecialitats"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="packed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/benvingudaConstraintLayout"
@@ -42,7 +48,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:text="Benvingut..."
                     android:textColor="@color/design_default_color_on_secondary"
                     android:textSize="28sp"
@@ -59,7 +65,9 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/lorem_ipsum"
+                    android:textAlignment="textStart"
                     android:textColor="@color/md_divider_dark_theme"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -81,12 +89,12 @@
             android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="8dp"
             app:cardElevation="5dp"
-            android:focusable="true"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             app:layout_constraintBottom_toTopOf="@+id/cardSubEspecialitats"
             app:layout_constraintEnd_toStartOf="@id/cardSubEspecialitats"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,35 +110,39 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/roboto_medium"
                     android:text="Necessito un pèrit especialista en..."
                     android:textColor="#000000"
                     android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <com.example.demo.Utils.AutofitRecyclerView
                     android:id="@+id/recyclerViewEspecialitats"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
+                    android:clipToPadding="false"
+                    android:columnWidth="100dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                 <Button
                     android:id="@+id/buttonEspecialitats"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:background="@drawable/roundbtn_bg"
                     android:fontFamily="@font/roboto_medium"
                     android:text="Consultar"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -152,12 +164,12 @@
             android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginBottom="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="8dp"
             app:cardElevation="5dp"
-            android:focusable="true"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -173,13 +185,12 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/roboto_medium"
                     android:text="Busco un pèrit per un cas en concret..."
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -204,4 +215,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

@@ -1,6 +1,8 @@
 package com.example.demo.Classes;
 
-public class Especialitat {
+import java.io.Serializable;
+
+public class Especialitat implements Serializable {
     private String id;
     private String nom;
     private String descripcio;

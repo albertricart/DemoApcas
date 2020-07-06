@@ -1,13 +1,14 @@
 package com.example.demo.Classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Perit {
+public class Perit implements Serializable {
     private int id;
     private String nom;
     private int telefon;
     private String provincia;
-    private ArrayList<Integer> codisPostals;
+    private ArrayList<CodiPostal> codisPostals;
     private String email;
     private ArrayList<Especialitat> especialitats;
     private boolean exercent;

@@ -19,17 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        >
+        android:padding="16dp">
 
 
         <ImageView
             android:id="@+id/imageViewPerit"
             android:layout_width="94dp"
             android:layout_height="96dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +34,7 @@
 
         <TextView
             android:id="@+id/textViewNomPerit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginLeft="12dp"
@@ -46,6 +42,7 @@
             android:text="Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageViewPerit"
             app:layout_constraintTop_toTopOf="@+id/imageViewPerit" />
 

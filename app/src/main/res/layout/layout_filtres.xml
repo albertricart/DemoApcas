@@ -1,87 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/textViewFiltres"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#C9304FFE"
-        android:fontFamily="@font/roboto_medium"
-        android:gravity="center_horizontal|center_vertical"
-        android:padding="20dp"
-        android:text="FILTRES"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/textViewEspecialitats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="Especialitats"
-        android:textColor="@android:color/primary_text_light"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewFiltres"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFiltres" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewEspecialitats"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEspecialitats" />
+        <TextView
+            android:id="@+id/textViewFiltres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="20dp"
+            android:text="FILTRES"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewCodisPostals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="Codis Postals d'Actuació"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/recyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        <TextView
+            android:id="@+id/textViewEspecialitats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Especialitats"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewFiltres"
+            app:layout_constraintTop_toBottomOf="@+id/textViewFiltres" />
 
-    <Button
-        android:id="@+id/buttonSelectProvincies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Selecciona les províncies"
-        app:layout_constraintStart_toStartOf="@+id/textViewCodisPostals"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCodisPostals" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewFiltresEspecialitats"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textViewEspecialitats"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEspecialitats" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/buttonSelectProvincies"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSelectProvincies" />
+        <TextView
+            android:id="@+id/textViewCodisPostals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Codis Postals d'Actuació"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/recyclerViewFiltresEspecialitats"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewFiltresEspecialitats" />
 
-    <CheckBox
-        android:id="@+id/checkBoxExercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="Exercent"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/recyclerView2"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/include"
+            layout="@layout/find_codis_postals"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textViewCodisPostals"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCodisPostals">
+
+        </include>
+
+        <CheckBox
+            android:id="@+id/checkBoxExercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Exercent"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/include"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+
+        <Button
+            android:id="@+id/buttonFilter"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filtrar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/buttonClear" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancelar"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonFilter"
+            app:layout_constraintEnd_toStartOf="@+id/buttonFilter"
+            app:layout_constraintTop_toTopOf="@+id/buttonFilter" />
+
+        <Button
+            android:id="@+id/buttonClear"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Clear All"
+            app:layout_constraintStart_toStartOf="@+id/checkBoxExercent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxExercent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

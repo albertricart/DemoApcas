@@ -1,8 +1,9 @@
 package com.example.demo.Activities;
 
-import android.app.AlertDialog;
+import android.Manifest;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -10,27 +11,31 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.demo.Adapters.EspecialitatsFiltersAdapter;
 import com.example.demo.Adapters.PeritsAdapter;
 import com.example.demo.Classes.Especialitat;
 import com.example.demo.Classes.Perit;
 import com.example.demo.R;
+import com.example.demo.Utils.CodisPostalsManager;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
-public class EspecialitatsPeritsActivity extends AppCompatActivity implements PeritsAdapter.OnPeritListener {
+public class EspecialitatsPeritsActivity extends AppCompatActivity implements PeritsAdapter.OnPeritListener, EspecialitatsFiltersAdapter.OnEspecialitatListener {
 
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    protected static final String PERIT_EXTRA = "perit";
     private Dialog dialog;
     private ArrayList<Perit> perits;
     private RecyclerView recyclerViewPerits;
@@ -75,6 +80,11 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
         filtrarPerits();
 
         buscarPerits();
+
+        askForStoragePermission();
+
+        CodisPostalsManager.readFile(getApplicationContext());
+        //CodisPostalsManager.searchCode("17461", getApplicationContext());
     }
 
 
@@ -84,18 +94,9 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
     }
 
     public void showPerit(Perit perit) {
-        TextView textViewNom;
-        TextView textViewTelf;
-        TextView textViewUbicacio;
-
-        textViewNom = (TextView) findViewById(R.id.textViewNomPerit);
-        textViewTelf = (TextView) findViewById(R.id.textViewTelefon);
-        textViewUbicacio = (TextView) findViewById(R.id.textViewUbicacio);
-
-        dialog.setContentView(R.layout.popup_perit);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        dialog.show();
+        Intent intent = new Intent(this, PeritActivity.class);
+        intent.putExtra(PERIT_EXTRA, perit);
+        startActivity(intent);
     }
 
     public void mostrarLlistaPerits(ArrayList<Perit> perits) {
@@ -149,98 +150,117 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
         extendedFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String[] listItems = new String[getEspecialitats().size()];
-                final boolean[] checkedItems = new boolean[getEspecialitats().size()];
-                final ArrayList<Integer> mUserItems = new ArrayList<>();
+                dialog.setContentView(R.layout.layout_filtres);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                for (int i = 0; i < getEspecialitats().size(); i++) {
-                    listItems[i] = getEspecialitats().get(i).getNom();
-                }
+                dialog.show();
 
-
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(EspecialitatsPeritsActivity.this);
-                mBuilder.setTitle(R.string.dialog_title);
-                mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
-//                        if (isChecked) {
-//                            if (!mUserItems.contains(position)) {
-//                                mUserItems.add(position);
+//                EspecialitatsFiltersAdapter especialitatsFiltersAdapter = new EspecialitatsFiltersAdapter(EspecialitatsPeritsActivity.getEspecialitats(), EspecialitatsPeritsActivity.this, getApplicationContext());
+//                FiltersDialog filtersDialog = new FiltersDialog(EspecialitatsPeritsActivity.this, especialitatsFiltersAdapter);
+//                filtersDialog.show();
+//                filtersDialog.setCanceledOnTouchOutside(false);
+            }
+        });
+//                Spinner spinnerEspecialitzacio = (Spinner) findViewById(R.id.spinnerEspecialitzacio);
+//                spinnerEspecialitzacio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+//                        ArrayList<Perit> perits = new ArrayList<>();
+//
+//                        if (position == 0) {
+//                            perits = getPerits();
+//                        } else {
+//                            for (Perit p : getPerits()) {
+//                                for (Especialitat e : p.getEspecialitats()) {
+//                                    if (e.getNom().equalsIgnoreCase(getEspecialitats().get(position).getNom())) {
+//                                        perits.add(p);
+//                                    }
+//                                }
 //                            }
-//                        } else if (mUserItems.contains(position)) {
-//                            mUserItems.remove(position);
 //                        }
-                        if (isChecked) {
-                            mUserItems.add(position);
-                        } else {
-                            mUserItems.remove((Integer.valueOf(position)));
-                        }
-                    }
-                });
-
-                mBuilder.setCancelable(false);
-
-                mBuilder.setPositiveButton(R.string.ok_label, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        String item = "";
-                        for (int i = 0; i < mUserItems.size(); i++) {
-                            item = item + listItems[mUserItems.get(i)];
-                            if (i != mUserItems.size() - 1) {
-                                item = item + ", ";
-                            }
-                        }
-                    }
-                });
-
-                mBuilder.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                mBuilder.setNeutralButton(R.string.clear_all_label, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        for (int i = 0; i < checkedItems.length; i++) {
-                            checkedItems[i] = false;
-                            mUserItems.clear();
-                        }
-                    }
-                });
-
-                AlertDialog mDialog = mBuilder.create();
-                mDialog.show();
-            }
-        });
+//                        mostrarLlistaPerits(perits);
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parentView) {
+//                    }
+//
+//                });
+//            }
 
 
-        Spinner spinnerEspecialitzacio = (Spinner) findViewById(R.id.spinnerEspecialitzacio);
-        spinnerEspecialitzacio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                ArrayList<Perit> perits = new ArrayList<>();
+//                final String[] listItems = new String[getEspecialitats().size()];
+//                final boolean[] checkedItems = new boolean[getEspecialitats().size()];
+//                final ArrayList<Integer> mUserItems = new ArrayList<>();
+//
+//                for (int i = 0; i < getEspecialitats().size(); i++) {
+//                    listItems[i] = getEspecialitats().get(i).getNom();
+//                }
+//
+//
+//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(EspecialitatsPeritsActivity.this);
+//                mBuilder.setTitle(R.string.dialog_title);
+//                mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
+////                        if (isChecked) {
+////                            if (!mUserItems.contains(position)) {
+////                                mUserItems.add(position);
+////                            }
+////                        } else if (mUserItems.contains(position)) {
+////                            mUserItems.remove(position);
+////                        }
+//                        if (isChecked) {
+//                            mUserItems.add(position);
+//                        } else {
+//                            mUserItems.remove((Integer.valueOf(position)));
+//                        }
+//                    }
+//                });
+//
+//                mBuilder.setCancelable(false);
+//
+//                mBuilder.setPositiveButton(R.string.ok_label, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int which) {
+//                        String item = "";
+//                        for (int i = 0; i < mUserItems.size(); i++) {
+//                            item = item + listItems[mUserItems.get(i)];
+//                            if (i != mUserItems.size() - 1) {
+//                                item = item + ", ";
+//                            }
+//                        }
+//                    }
+//                });
+//
+//                mBuilder.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//
+//                mBuilder.setNeutralButton(R.string.clear_all_label, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int which) {
+//                        for (int i = 0; i < checkedItems.length; i++) {
+//                            checkedItems[i] = false;
+//                            mUserItems.clear();
+//                        }
+//                    }
+//                });
+//
+//                AlertDialog mDialog = mBuilder.create();
+//                mDialog.show();
+//            }
+//        });
 
-                if (position == 0) {
-                    perits = getPerits();
-                } else {
-                    for (Perit p : getPerits()) {
-                        for (Especialitat e : p.getEspecialitats()) {
-                            if (e.getNom().equalsIgnoreCase(getEspecialitats().get(position).getNom())) {
-                                perits.add(p);
-                            }
-                        }
-                    }
-                }
-                mostrarLlistaPerits(perits);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
+    }
 
-        });
+    @Override
+    public void OnEspecialitatClick(int position) {
+
     }
 
 
@@ -280,5 +300,47 @@ public class EspecialitatsPeritsActivity extends AppCompatActivity implements Pe
         return especialitats;
     }
 
+
+//    @Override
+//    public void onDialogPositiveClick(DialogFragment dialog) {
+//
+//    }
+//
+//    @Override
+//    public void onDialogNegativeClick(DialogFragment dialog) {
+//
+//    }
+
+    public void askForStoragePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                //filter
+            } else {
+                //ask for permission
+                if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    Snackbar.make(findViewById(R.id.constraintLayoutActivityEspecialtats), getString(R.string.storage_permission), Snackbar.LENGTH_LONG).show();
+                }
+
+                requestPermissions((new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}), REQUEST_EXTERNAL_STORAGE);
+            }
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_STORAGE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    Snackbar.make(findViewById(R.id.constraintLayoutActivityEspecialtats), getString(R.string.storage_permission_denied), Snackbar.LENGTH_LONG).show();
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                break;
+        }
+    }
 
 }
