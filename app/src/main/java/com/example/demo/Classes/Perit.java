@@ -13,11 +13,12 @@ public class Perit implements Serializable {
     private ArrayList<Especialitat> especialitats;
     private boolean exercent;
 
-    public Perit(int id, String nom, int telefon, String provincia, String email, ArrayList<Especialitat> especialitats, boolean exercent) {
+    public Perit(int id, String nom, int telefon, String provincia, ArrayList<CodiPostal> codisPostals, String email, ArrayList<Especialitat> especialitats, boolean exercent) {
         this.id = id;
         this.nom = nom;
         this.telefon = telefon;
         this.provincia = provincia;
+        this.codisPostals = codisPostals;
         this.email = email;
         this.especialitats = especialitats;
         this.exercent = exercent;
@@ -47,9 +48,23 @@ public class Perit implements Serializable {
         return especialitats;
     }
 
+    public ArrayList<CodiPostal> getCodisPostals() {
+        return codisPostals;
+    }
+
+    public ArrayList<CodiPostal> getReducedCodisPostals(int n) {
+        ArrayList<CodiPostal> reducedCodisPostals = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            reducedCodisPostals.add(this.getCodisPostals().get(i));
+        }
+        return reducedCodisPostals;
+    }
+
+
     public boolean isExercent() {
         return exercent;
     }
+
 
     public boolean buscarCamp(CharSequence charSequence) {
         boolean trobat = false;
@@ -64,6 +79,12 @@ public class Perit implements Serializable {
                 } else {
                     if (email.toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         trobat = true;
+                    } else {
+                        for (CodiPostal cp : codisPostals) {
+                            if (cp.toString().contains(charSequence)) {
+                                trobat = true;
+                            }
+                        }
                     }
                 }
             }

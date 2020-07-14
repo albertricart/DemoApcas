@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.demo">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,9 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Activities.ContactPerit"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Activities.FilterActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.MaterialComponents.Light.Dialog"
+            tools:ignore="NewApi" />
+        <activity
             android:name=".Activities.PeritActivity"
             android:label="@string/title_activity_perit"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.EspecialitatsPeritsActivity" />
         <activity android:name=".Activities.MainActivity">
             <intent-filter>

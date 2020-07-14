@@ -5,6 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Chip"
-    app:chipIcon="@drawable/ic_outline_local_florist_24">
+    app:checkedIconVisible="true"
+    app:chipIcon="@drawable/ic_outline_local_florist_24"
+    app:chipIconVisible="true">
 
 </com.google.android.material.chip.Chip>

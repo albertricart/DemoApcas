@@ -16,18 +16,16 @@ import java.util.ArrayList;
 
 public class EspecialitatsFiltersAdapter extends RecyclerView.Adapter<EspecialitatsFiltersAdapter.EspecialitatViewHolder> {
 
-    private Context context;
+    private static Context context;
     private ArrayList<Especialitat> especialitats;
     private OnEspecialitatListener mOnEspecialitatListener;
-    // Allows to remember the last item shown on screen
-    private int lastPosition = -1;
-    private final static int ANIM_DURATION = 1000; //ANIM_DURATION in milliseconds
 
     //ADAPTER CONSTRUCTOR
     public EspecialitatsFiltersAdapter(ArrayList<Especialitat> especialitats, OnEspecialitatListener mOnEspecialitatListener, Context context) {
         this.especialitats = especialitats;
         this.mOnEspecialitatListener = mOnEspecialitatListener;
         this.context = context;
+
     }
 
     //VIEWHOLDER CLASS OF EspecialitatsAdapter
@@ -47,12 +45,24 @@ public class EspecialitatsFiltersAdapter extends RecyclerView.Adapter<Especialit
 
         @Override
         public void onClick(View v) {
-            onEspecialitatListener.OnEspecialitatClick(getAdapterPosition());
+//            onEspecialitatListener.OnEspecialitatClick(getAdapterPosition());
+//            if (chip.isChecked()){
+//                chip.setChecked(false);
+//                chip.setChipBackgroundColorResource(R.color.mtrl_chip_background_color);
+//                chip.setTextColor(context.getResources().getColor(R.color.mtrl_chip_text_color));
+//                chip.setChipIconTintResource(android.R.color.white);
+//            }else{
+//                chip.setChecked(true);
+//                chip.setChipBackgroundColorResource(R.color.colorPrimary);
+//                chip.setTextColor(context.getResources().getColor(android.R.color.white));
+//                chip.setChipIconTintResource(android.R.color.white);
+//            }
+
         }
 
         public void bindEspecialitat(Especialitat especialitat) {
             chip.setText(especialitat.getNom());
-            //chip.setChipIconResource(especialitat.getImatge());
+            chip.setChipIconResource(especialitat.getImatge());
         }
 
     }
@@ -71,7 +81,6 @@ public class EspecialitatsFiltersAdapter extends RecyclerView.Adapter<Especialit
     public void onBindViewHolder(@NonNull EspecialitatsFiltersAdapter.EspecialitatViewHolder holder, int position) {
         Especialitat especialitat = especialitats.get(position);
         holder.bindEspecialitat(especialitat);
-
     }
 
     @Override

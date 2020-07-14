@@ -11,16 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.demo.Classes.Perit;
 import com.example.demo.R;
+import com.example.demo.Utils.SpacesItemDecoration;
 
 import java.util.ArrayList;
 
-public class PeritsAdapter extends RecyclerView.Adapter<PeritsAdapter.PeritViewHolder> {
+public class PeritsAdapter extends RecyclerView.Adapter<PeritsAdapter.PeritViewHolder> implements EspecialitatsFiltersAdapter.OnEspecialitatListener {
 
-    private Context context;
+    private static Context context;
     private ArrayList<Perit> perits;
     private OnPeritListener mOnPeritListener;
     // Allows to remember the last item shown on screen
@@ -41,6 +43,7 @@ public class PeritsAdapter extends RecyclerView.Adapter<PeritsAdapter.PeritViewH
         TextView textViewTelf;
         TextView textViewUbicacio;
         ImageView imageViewFoto;
+        RecyclerView recyclerView;
 
         //interface used to allow a click on each view
         OnPeritListener onPeritListener;
@@ -48,10 +51,11 @@ public class PeritsAdapter extends RecyclerView.Adapter<PeritsAdapter.PeritViewH
         public PeritViewHolder(@NonNull View itemView, OnPeritListener onPeritListener) {
             super(itemView);
             this.onPeritListener = onPeritListener;
-            textViewNom = (TextView)itemView.findViewById(R.id.textViewNomPerit);
-            textViewTelf = (TextView)itemView.findViewById(R.id.textViewTelefon);
-            textViewUbicacio = (TextView)itemView.findViewById(R.id.textViewUbicacio);
-            imageViewFoto = (ImageView)itemView.findViewById(R.id.imageViewPerit);
+            textViewNom = (TextView) itemView.findViewById(R.id.textViewNomPerit);
+            textViewTelf = (TextView) itemView.findViewById(R.id.textViewTelefon);
+            textViewUbicacio = (TextView) itemView.findViewById(R.id.textViewUbicacio);
+            imageViewFoto = (ImageView) itemView.findViewById(R.id.imageViewPerit);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.recyclerViewEspecialitatsPeritCard);
             itemView.setOnClickListener(this);
         }
 
@@ -60,11 +64,16 @@ public class PeritsAdapter extends RecyclerView.Adapter<PeritsAdapter.PeritViewH
             onPeritListener.OnPeritClick(getAdapterPosition());
         }
 
-        public void bindPerit(Perit perit){
+        public void bindPerit(Perit perit) {
             textViewNom.setText(perit.getNom());
             textViewTelf.setText(String.valueOf(perit.getTelefon()));
             textViewUbicacio.setText(perit.getProvincia());
             imageViewFoto.setImageResource(R.drawable.sample_profile_pic);
+            recyclerView.setHasFixedSize(false);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
+            recyclerView.addItemDecoration(new SpacesItemDecoration(10));
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(new EspecialitatsFiltersAdapter(perit.getEspecialitats(), null, context));
         }
 
     }
@@ -93,11 +102,9 @@ public class PeritsAdapter extends RecyclerView.Adapter<PeritsAdapter.PeritViewH
         return perits.size();
     }
 
-    private void setAnimation(View viewToAnimate, int position)
-    {
+    private void setAnimation(View viewToAnimate, int position) {
         // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition)
-        {
+        if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
             animation.setDuration(ANIM_DURATION);
             viewToAnimate.startAnimation(animation);
@@ -114,6 +121,11 @@ public class PeritsAdapter extends RecyclerView.Adapter<PeritsAdapter.PeritViewH
 
     public interface OnPeritListener {
         void OnPeritClick(int position);
+    }
+
+    @Override
+    public void OnEspecialitatClick(int position) {
+
     }
 
 }

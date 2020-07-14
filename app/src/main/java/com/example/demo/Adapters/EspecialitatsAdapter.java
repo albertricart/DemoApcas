@@ -54,6 +54,7 @@ public class EspecialitatsAdapter extends RecyclerView.Adapter<EspecialitatsAdap
         @Override
         public void onClick(View v) {
             onEspecialitatListener.OnEspecialitatClick(getAdapterPosition());
+
         }
 
         public void bindEspecialitat(Especialitat especialitat){

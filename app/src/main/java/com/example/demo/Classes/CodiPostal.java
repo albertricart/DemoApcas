@@ -16,6 +16,15 @@ public class CodiPostal implements Serializable {
         this.nomMunicipi = nomMunicipi;
     }
 
+    public boolean containsCodi(String c) {
+        if (codiPostal.contains(c)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public String getCodiPostal() {
         return codiPostal;
     }

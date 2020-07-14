@@ -2,12 +2,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF">
 
 
@@ -45,7 +45,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewFiltresEspecialitats"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
@@ -58,16 +58,18 @@
             android:id="@+id/textViewCodisPostals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Codis Postals d'Actuació"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/recyclerViewFiltresEspecialitats"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewFiltresEspecialitats" />
 
         <include
-            android:id="@+id/include"
+            android:id="@+id/includeCodisPostals"
             layout="@layout/find_codis_postals"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -84,12 +86,13 @@
             android:id="@+id/checkBoxExercent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto_medium"
             android:text="Exercent"
             android:textColor="#000000"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/include"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            app:layout_constraintStart_toStartOf="@+id/includeCodisPostals"
+            app:layout_constraintTop_toBottomOf="@+id/includeCodisPostals" />
 
         <Button
             android:id="@+id/buttonFilter"
@@ -97,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Filtrar"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/includeCodisPostals"
             app:layout_constraintTop_toTopOf="@+id/buttonClear" />
 
         <Button
@@ -105,6 +108,8 @@
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Cancelar"
             app:layout_constraintBottom_toBottomOf="@+id/buttonFilter"
             app:layout_constraintEnd_toStartOf="@+id/buttonFilter"

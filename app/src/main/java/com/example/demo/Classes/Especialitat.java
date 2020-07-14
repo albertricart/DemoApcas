@@ -14,6 +14,7 @@ public class Especialitat implements Serializable {
         this.modeAcreditacio = modeAcreditacio;
     }
 
+
     public Especialitat(String nom) {
         this.nom = nom;
     }

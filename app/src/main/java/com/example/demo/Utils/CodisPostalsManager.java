@@ -19,32 +19,33 @@ public class CodisPostalsManager {
     private static final String TAG = "CodisPostalsManager";
     private static final String filename = "codispostals.csv";
     public static final String FILE_REGEX = ";";
+    public static ArrayList<CodiPostal> codisPostals;
 
-    public static boolean searchCode(String code, Context context) {
-        boolean exists = false;
-        BufferedReader br;
-        try {
-            String path = checkFile(context);
-            br = new BufferedReader(new FileReader(path));
-            String line;
-            while ((line = br.readLine()) != null) {
-                //if postal code equals code requested return true
-                if (line.split(FILE_REGEX)[0].equals(code)) {
-                    Log.d(TAG, "searchCode: found");
-                    exists = true;
-                }
+
+    public static ArrayList<CodiPostal> searchCodes(ArrayList<CodiPostal> cps, String code) {
+        ArrayList<CodiPostal> codiPostalsFound = new ArrayList<>();
+        CodiPostal codiPostalFound = null;
+        for (int i = 0; i < cps.size(); i++) {
+            if (cps.get(i).getCodiPostal().contains(code)) {
+                codiPostalFound = cps.get(i);
+                codiPostalsFound.add(codiPostalFound);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
-        return exists;
+        return codiPostalsFound;
     }
 
-    public static ArrayList<CodiPostal> readFile(Context context) {
-        ArrayList<CodiPostal> codisPostals = new ArrayList<>();
+    public static CodiPostal getCode(ArrayList<CodiPostal> cps, String code) {
+        CodiPostal codiPostalFound = null;
+        for (int i = 0; i < cps.size(); i++) {
+            if (cps.get(i).getCodiPostal().contains(code)) {
+                codiPostalFound = cps.get(i);
+            }
+        }
+        return codiPostalFound;
+    }
+
+    public static void readFile(Context context) {
+        codisPostals = new ArrayList<>();
         BufferedReader br;
         CodiPostal cp = null;
         String path = checkFile(context);
@@ -55,16 +56,15 @@ public class CodisPostalsManager {
             while ((line = br.readLine()) != null) {
                 values = line.split(FILE_REGEX);
                 cp = new CodiPostal(values[0], values[1], values[2]);
-                Log.d(TAG, cp.toString());
                 codisPostals.add(cp);
-                //codisPostals.add(new CodiPostal(values[0], values[1], values[2]));
             }
+
+            Log.d(TAG, "Postal codes loaded!!");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return codisPostals;
     }
 
     public static String checkFile(Context context) {
@@ -103,8 +103,6 @@ public class CodisPostalsManager {
 
     //get codis postals from api
     public static ArrayList<CodiPostal> getCodisPostals() {
-        ArrayList<CodiPostal> cps = new ArrayList<>();
-
-        return cps;
+        return codisPostals;
     }
 }

@@ -13,9 +13,12 @@ import com.example.demo.Adapters.EspecialitatsAdapter;
 import com.example.demo.Classes.Especialitat;
 import com.example.demo.Dialogs.EspecialitatDialog;
 import com.example.demo.R;
+import com.example.demo.Utils.CodisPostalsManager;
 import com.example.demo.Utils.GridAutofitLayoutManager;
 
 import java.util.ArrayList;
+
+import static com.example.demo.API.api.getEspecialitats;
 
 public class MainActivity extends AppCompatActivity implements EspecialitatsAdapter.OnEspecialitatListener {
 
@@ -41,22 +44,16 @@ public class MainActivity extends AppCompatActivity implements EspecialitatsAdap
         cardViewEspecialitats.setOnClickListener(especialitatsOnClickListener);
 
 
-        mostrarLlistaEspecialitats(EspecialitatsPeritsActivity.getEspecialitats());
+        CodisPostalsManager.readFile(getApplicationContext());
+        mostrarLlistaEspecialitats(getEspecialitats());
 
     }
 
     @Override
     public void OnEspecialitatClick(int position) {
-        Especialitat especialitat = EspecialitatsPeritsActivity.getEspecialitats().get(position);
+        Especialitat especialitat = getEspecialitats().get(position);
         EspecialitatDialog dialog = new EspecialitatDialog(this, especialitat);
         dialog.show();
-        dialog.setDialogResult(new EspecialitatDialog.OnEspecialitatDialogResult() {
-            @Override
-            public void finish(String result) {
-
-            }
-        });
-
     }
 
     public void startEspecialitatsActivity() {
