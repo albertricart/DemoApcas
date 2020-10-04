@@ -104,5 +104,7 @@
     <string name="code_not_found">El codi introduït no existeix</string>
     <string name="feedback_message">Leave product feedback or share your ideas</string>
     <string name="send">Send</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

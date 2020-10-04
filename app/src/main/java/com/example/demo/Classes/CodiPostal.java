@@ -9,11 +9,13 @@ public class CodiPostal implements Serializable {
     private String codiPostal;
     private String codiMunicipi;
     private String nomMunicipi;
+    private String provincia;
 
-    public CodiPostal(String codiPostal, String codiMunicipi, String nomMunicipi) {
+    public CodiPostal(String codiPostal, String codiMunicipi, String nomMunicipi, String provincia) {
         this.codiPostal = codiPostal;
         this.codiMunicipi = codiMunicipi;
         this.nomMunicipi = nomMunicipi;
+        this.provincia = provincia;
     }
 
     public boolean containsCodi(String c) {
@@ -35,6 +37,10 @@ public class CodiPostal implements Serializable {
 
     public String getNomMunicipi() {
         return nomMunicipi;
+    }
+
+    public String getProvincia() {
+        return provincia;
     }
 
     @Override

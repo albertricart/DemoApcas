@@ -49,14 +49,13 @@ public class api {
         return especialitats;
     }
 
-    //TODO: PASSAR EL CONTEXT RALENTITZA MOLT LA APP (APLICABLE A ALTRES METODES!!!)
     public static ArrayList<CodiPostal> getRandomCodis(int n) {
         ArrayList<CodiPostal> codisPostals = new ArrayList<>();
         Random random = new Random();
         int randomNumber;
 
         for (int i = 0; i < n; i++) {
-            randomNumber = random.nextInt(CodisPostalsManager.getCodisPostals().size() + 1);
+            randomNumber = random.nextInt(CodisPostalsManager.getCodisPostals().size());
             codisPostals.add(CodisPostalsManager.getCodisPostals().get(randomNumber));
         }
 

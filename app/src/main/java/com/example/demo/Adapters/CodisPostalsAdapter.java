@@ -23,6 +23,7 @@ public class CodisPostalsAdapter extends RecyclerView.Adapter<CodisPostalsAdapte
         this.codisPostals = codisPostals;
     }
 
+
     public class CodiViewHolder extends RecyclerView.ViewHolder {
         private TextView codiPostal;
         private TextView codiMunicipi;
@@ -70,4 +71,6 @@ public class CodisPostalsAdapter extends RecyclerView.Adapter<CodisPostalsAdapte
         anim.setDuration(ANIM_DURATION);
         view.startAnimation(anim);
     }
+
+
 }

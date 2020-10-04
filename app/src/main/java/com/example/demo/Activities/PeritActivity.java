@@ -2,80 +2,91 @@ package com.example.demo.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.demo.Adapters.CodisPostalsAdapter;
-import com.example.demo.Adapters.EspecialitatsAdapter;
-import com.example.demo.Classes.CodiPostal;
-import com.example.demo.Classes.Especialitat;
+import com.example.demo.Adapters.ViewPagerAdapter;
 import com.example.demo.Classes.Perit;
-import com.example.demo.Dialogs.EspecialitatDialog;
 import com.example.demo.R;
-import com.example.demo.Utils.CodisPostalsManager;
-import com.example.demo.Utils.GridAutofitLayoutManager;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.example.demo.Utils.ZoomOutPageTransformer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.ArrayList;
+public class PeritActivity extends FragmentActivity {
 
-import static com.example.demo.API.api.getEspecialitats;
-
-public class PeritActivity extends AppCompatActivity implements EspecialitatsAdapter.OnEspecialitatListener {
-
-    private View viewCodis;
     private Perit perit;
-    private static final int SHOW_CODIS = 3;
-    private Button buttonMostrarMes;
-    RecyclerView recyclerViewCps;
+    // tab titles
+    private String[] titles = new String[]{"Info", "Especialitats", "Zones Actuació", "Web"};
+
+    private ViewPager2 viewPager2;
+
+    private ViewPagerAdapter pagerAdapter;
+
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perit);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        viewCodis = findViewById(R.id.includeCodisPostals);
-        buttonMostrarMes = viewCodis.findViewById(R.id.buttonMostraMes);
-        recyclerViewCps = (RecyclerView) viewCodis.findViewById(R.id.recyclerViewCodisPostals);
-        Button buttonCerca = (Button) viewCodis.findViewById(R.id.buttonCerca);
-        buttonCerca.setVisibility(View.GONE);
-        perit = (Perit) getIntent().getSerializableExtra(EspecialitatsPeritsActivity.PERIT_EXTRA);
-        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolBarLayout.setTitle(perit.getNom());
-
-        mostrarLlistaEspecialitats(perit.getEspecialitats());
-        mostrarCodis(perit.getCodisPostals());
-
-        TextInputEditText editText = viewCodis.findViewById(R.id.editTextNumberCodi);
-        editText.addTextChangedListener(new TextWatcher() {
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                ArrayList<CodiPostal> cps = CodisPostalsManager.searchCodes(perit.getCodisPostals(), charSequence.toString());
-                recyclerViewCps.setHasFixedSize(true);
-                recyclerViewCps.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                recyclerViewCps.setAdapter(new CodisPostalsAdapter(cps));
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
+        NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.nest_scrollview);
+        //enable horizontal scroll to match viewpager properties
+        scrollView.setFillViewport(true);
+
+        tabLayout = findViewById(R.id.tab_layout);
+        perit = (Perit) getIntent().getSerializableExtra(EspecialitatsPeritsActivity.PERIT_EXTRA);
+        toolbar.setTitle(perit.getNom());
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+        viewPager2 = findViewById(R.id.pager);
+        pagerAdapter = new ViewPagerAdapter(this, perit);
+        viewPager2.setAdapter(pagerAdapter);
+        viewPager2.setPageTransformer(new ZoomOutPageTransformer());
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                String title;
+                int resId;
+                switch (position) {
+                    case 0:
+                        title = "Info";
+                        resId = R.drawable.ic_info;
+                        break;
+                    case 1:
+                        title = "Especialitats";
+                        resId = R.drawable.ic_round_build_24;
+                        break;
+                    case 2:
+                        title = "Zones Actuació";
+                        resId = R.drawable.ic_pin;
+                        break;
+                    case 3:
+                        title = "Web";
+                        resId = R.drawable.ic_baseline_language_24;
+                        //resId = R.drawable.ic_link;
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + position);
+                }
+                tab.setText(title);
+                tab.setIcon(resId);
+            }
+        });
+        tabLayoutMediator.attach();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -86,47 +97,6 @@ public class PeritActivity extends AppCompatActivity implements EspecialitatsAda
             }
         });
 
-
-//        buttonMostrarMes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (buttonMostrarMes.getText().equals("Mostra més")){
-//                    mostrarCodis(perit.getCodisPostals());
-//                    buttonMostrarMes.setText("Mostra menys");
-//                }else{
-//                    mostrarCodis(perit.getReducedCodisPostals(SHOW_CODIS));
-//                    buttonMostrarMes.setText("Mostra més");
-//
-//                }
-//            }
-//        });
     }
 
-
-    public void mostrarLlistaEspecialitats(ArrayList<Especialitat> especialitats) {
-        //obtenim la referencia de la recycler view
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewEspecialitats);
-        recyclerView.setHasFixedSize(true);
-        //creem un nou liniesAdapter
-        EspecialitatsAdapter especialitatsAdapter = new EspecialitatsAdapter(especialitats, this, getApplicationContext());
-        //li diem a la recycler view que utilitzi un gridlayoutmanager
-        GridAutofitLayoutManager gridAutofitLayoutManager = new GridAutofitLayoutManager(this, 300);
-        gridAutofitLayoutManager.setSpanCount(perit.getEspecialitats().size());
-        recyclerView.setLayoutManager(gridAutofitLayoutManager);
-        //li passem el adapter a la recycler view
-        recyclerView.setAdapter(especialitatsAdapter);
-    }
-
-    public void mostrarCodis(ArrayList<CodiPostal> codisPostals) {
-        recyclerViewCps.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerViewCps.setAdapter(new CodisPostalsAdapter(codisPostals));
-        //TODO: view more codis button, mostrar nomes 3 (3 primers de la llista) i si fa click al button mostrar tot el dataset
-    }
-
-    @Override
-    public void OnEspecialitatClick(int position) {
-        Especialitat especialitat = getEspecialitats().get(position);
-        EspecialitatDialog dialog = new EspecialitatDialog(this, especialitat);
-        dialog.show();
-    }
 }

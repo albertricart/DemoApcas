@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.demo.Classes.Perit;
 import com.example.demo.R;
-import com.example.demo.Utils.SpacesItemDecoration;
 
 import java.util.ArrayList;
 
@@ -71,7 +70,7 @@ public class PeritsAdapter extends RecyclerView.Adapter<PeritsAdapter.PeritViewH
             imageViewFoto.setImageResource(R.drawable.sample_profile_pic);
             recyclerView.setHasFixedSize(false);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
-            recyclerView.addItemDecoration(new SpacesItemDecoration(10));
+            //recyclerView.addItemDecoration(new SpacesItemDecoration(10));
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(new EspecialitatsFiltersAdapter(perit.getEspecialitats(), null, context));
         }

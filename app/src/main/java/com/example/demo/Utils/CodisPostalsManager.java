@@ -37,7 +37,7 @@ public class CodisPostalsManager {
     public static CodiPostal getCode(ArrayList<CodiPostal> cps, String code) {
         CodiPostal codiPostalFound = null;
         for (int i = 0; i < cps.size(); i++) {
-            if (cps.get(i).getCodiPostal().contains(code)) {
+            if (cps.get(i).getCodiPostal().equals(code)) {
                 codiPostalFound = cps.get(i);
             }
         }
@@ -55,11 +55,11 @@ public class CodisPostalsManager {
             String[] values;
             while ((line = br.readLine()) != null) {
                 values = line.split(FILE_REGEX);
-                cp = new CodiPostal(values[0], values[1], values[2]);
+                cp = new CodiPostal(values[0], values[1], values[2], values[3]);
                 codisPostals.add(cp);
             }
 
-            Log.d(TAG, "Postal codes loaded!!");
+            Log.d(TAG, codisPostals.size() + " postal codes loaded!!");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -69,7 +69,7 @@ public class CodisPostalsManager {
 
     public static String checkFile(Context context) {
         //check if directory exists first
-        File dir = new File(context.getFilesDir(), "demodir");
+        File dir = new File(context.getFilesDir(), "codis_postals");
         if (!dir.exists()) {
             dir.mkdir();
         }

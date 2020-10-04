@@ -25,7 +25,7 @@
         <activity
             android:name=".Activities.PeritActivity"
             android:label="@string/title_activity_perit"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light" />
         <activity android:name=".Activities.EspecialitatsPeritsActivity" />
         <activity android:name=".Activities.MainActivity">
             <intent-filter>

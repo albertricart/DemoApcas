@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,9 +32,12 @@ public class FilterActivity extends AppCompatActivity implements EspecialitatsFi
         // Transparent background
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.setFinishOnTouchOutside(true);
+
         setContentView(R.layout.activity_filter);
         this.setTitle(null);
         viewCodis = findViewById(R.id.includeCodisPostals);
+        CheckBox checkBoxActive = findViewById(R.id.checkBoxExercent);
+        checkBoxActive.setChecked(true);
         findCode(viewCodis, true);
         fillEspecialitats();
 
@@ -42,7 +46,7 @@ public class FilterActivity extends AppCompatActivity implements EspecialitatsFi
 
 
     public static void findCode(View viewCodis, boolean snackbarAlert) {
-        Button buttonCercar = viewCodis.findViewById(R.id.buttonCerca);
+        Button buttonCercar = viewCodis.findViewById(R.id.buttonAfegir);
         EditText editTextCodi = viewCodis.findViewById(R.id.editTextNumberCodi);
         buttonCercar.setOnClickListener(new View.OnClickListener() {
             @Override
